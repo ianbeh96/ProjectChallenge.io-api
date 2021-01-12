@@ -1,0 +1,16 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:alpine
+    container_name: projectchallenge-db
+    volumes:
+        - ./database:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+        POSTGRES_USER: projectchallengedb
+        POSTGRES_PASSWORD: projectchallengedb
+        POSTGRES_DB: projectchallengedb
+    ports:
+        - "5432:5432"
+    expose:
+        - 5432
