@@ -1,4 +1,5 @@
 import db
+import json
 
 from flask import Flask
 app = Flask(__name__)
@@ -16,7 +17,13 @@ def users():
     print("grabbing data from database")
     conn = db.connect()
     users = db.get_users(conn) #users: dict
-    return str(users)
+    print(users)
+    abc = {
+        "name": "John",
+        "age": 30,
+        "married": True,
+        "divorced": False}
+    return json.dumps(abc)
     
 
 if __name__ == '__main__':
