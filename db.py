@@ -31,6 +31,20 @@ def get_users(conn) -> List[dict]:
         users.append(db_row_to_dict(row))
     return users
 
+def get_challenges(conn) -> List[dict]:
+    """Grab a list of challenges from the database.
+    conn: psycopg2.extensions.connection object
+
+    Returns:
+    A list of python dicts containing challenge data
+    """
+    challenges = []
+    curr = conn.cursor()
+    curr.execute('SELECT * FROM challenges;')
+    for row in curr.fetchall():
+        challenges.append(db_row_to_dict(row))
+    return challenges
+
 def db_row_to_dict(row: tuple) -> dict:
     """Helper function to convert a tuple of data into a dict
     row: tuple of user data
