@@ -31,6 +31,15 @@ def challenges():
     #all_challenges = {"challenges": challenges};
     return json.dumps(challenges)
 
+@app.route('/tasks')
+def tasks():
+    """A tasks endpoint for obtaining a list of tasks"""
+    print("Grabbing task data from database")
+    conn = db.connect()
+    tasks = db.get_tasks(conn) #tasks: json
+    print(tasks)
+    all_tasks = {"tasks": tasks}
+    return all_tasks #to return a json named tasks
 
 if __name__ == '__main__':
     app.run()
