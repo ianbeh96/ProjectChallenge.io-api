@@ -17,16 +17,18 @@ def health():
 @app.route('/users')
 def users():
     """A users endpoint for obtaining a list of users"""
-    print("Grabbing data from database")
+    print("Grabbing user data from database")
     conn = db.connect()
     users = db.get_users(conn) #users: dict
-    abc = {
-        "name": "John",
-        "age": 30,
-        "married": True,
-        "divorced": False}
-    return json.dumps(user)
+    return json.dumps(users)
     
+@app.route('/challenges')
+def challenges():
+    """A challenges endpoint for obtaining a list of challenges"""
+    print("Grabbing challenge data from database")
+    conn = db.connect()
+    challenges = db.get_challenges(conn) #challenges: dict
+    return json.dumps(challenges)
 
 if __name__ == '__main__':
     app.run()
