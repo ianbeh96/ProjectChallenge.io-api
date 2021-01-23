@@ -17,13 +17,12 @@ def users():
     print("grabbing data from database")
     conn = db.connect()
     users = db.get_users(conn) #users: dict
-    print(users)
     abc = {
         "name": "John",
         "age": 30,
         "married": True,
         "divorced": False}
-    return json.dumps(abc)
+    return json.dumps(user)
     
 
 if __name__ == '__main__':

@@ -1,8 +1,14 @@
 import db_config as config 
+import psycopg2
+
 from typing import List
-import psycopg2 
 
 def connect():
+    """Initiate a postgres database connection using psycopg2
+
+    Returns:
+    A psycopg2.extensions.connection object
+    """
     return psycopg2.connect(
         dbname = config.dbname,
         user = config.dbuser,
@@ -12,14 +18,26 @@ def connect():
     )
 
 def get_users(conn) -> List[dict]:
+    """Grab a list of users from the database.
+    conn: psycopg2.extensions.connection object
+
+    Returns:
+    A list of python dicts containing user data
+    """
     users = []
     curr = conn.cursor()
     curr.execute('SELECT * FROM users;')
     for row in curr.fetchall():
-        users.append(db_to_dict(row))
+        users.append(db_row_to_dict(row))
     return users
 
-def db_to_dict(row: tuple):
+def db_row_to_dict(row: tuple) -> dict:
+    """Helper function to convert a tuple of data into a dict
+    row: tuple of user data
+
+    Returns:
+    A dict with db columns as the dict keys
+    """
     column_names = [
             "id", "username", "password", "name", 
             "email", "challenge_id", "points", "role"
