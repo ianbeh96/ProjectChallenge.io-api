@@ -28,7 +28,9 @@ def challenges():
     print("Grabbing challenge data from database")
     conn = db.connect()
     challenges = db.get_challenges(conn) #challenges: dict
+    #all_challenges = {"challenges": challenges};
     return json.dumps(challenges)
+
 
 if __name__ == '__main__':
     app.run()

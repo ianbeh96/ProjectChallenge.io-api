@@ -28,8 +28,21 @@ def get_users(conn) -> List[dict]:
     curr = conn.cursor()
     curr.execute('SELECT * FROM users;')
     for row in curr.fetchall():
-        users.append(db_row_to_dict(row))
+        users.append(db_row_to_dict_user(row))
     return users
+
+def db_row_to_dict_user(row: tuple) -> dict:
+    """Helper function to convert a tuple of data into a dict
+    row: tuple of user data
+
+    Returns:
+    A dict with db columns as the dict keys
+    """
+    column_names = [
+            "id", "username", "password", "name", 
+            "email", "challenge_id", "points", "role"
+        ]
+    return dict(zip(column_names, list(row)))
 
 def get_challenges(conn) -> List[dict]:
     """Grab a list of challenges from the database.
@@ -42,10 +55,10 @@ def get_challenges(conn) -> List[dict]:
     curr = conn.cursor()
     curr.execute('SELECT * FROM challenges;')
     for row in curr.fetchall():
-        challenges.append(db_row_to_dict(row))
+        challenges.append(db_row_to_dict_challenge(row))
     return challenges
 
-def db_row_to_dict(row: tuple) -> dict:
+def db_row_to_dict_challenge(row: tuple) -> dict:
     """Helper function to convert a tuple of data into a dict
     row: tuple of user data
 
@@ -53,7 +66,23 @@ def db_row_to_dict(row: tuple) -> dict:
     A dict with db columns as the dict keys
     """
     column_names = [
-            "id", "username", "password", "name", 
-            "email", "challenge_id", "points", "role"
+            "id", "challenge_id", "name", "status", 
+            "leader", "start_date", "end_date"
         ]
     return dict(zip(column_names, list(row)))
+
+def get_tasks(conn) -> List[dict]:
+    """Grab a list of tasks from the database.
+    conn: psycopg2.extensions.connection object
+
+    Returns:
+    A list of python dicts containing task data
+    """
+    tasks = []
+    curr = conn.cursor()
+    curr.execute('SELECT * FROM tasks;')
+    for row in curr.fetchall():
+        tasks.append(db_row_to_dict(row))
+    return tasks
+
+
