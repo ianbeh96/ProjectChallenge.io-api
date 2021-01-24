@@ -97,4 +97,27 @@ def db_row_to_dict_task(row: tuple) -> dict:
         ]
     return dict(zip(column_names, list(row)))
 
+def get_user(conn, username) -> List[dict]:
+    """Grab a single user from the database.
+    conn: psycopg2.extensions.connection object
+    Returns:
+    A list of python dicts containing THE user data
+    """
+    user = []
+    curr = conn.cursor()
+    curr.execute("SELECT username, name, email, points, role FROM users WHERE username='" + username + "';")
+    for row in curr.fetchall():
+        user.append(db_row_to_dict_single_user(row))
+    return user
 
+def db_row_to_dict_single_user(row: tuple) -> dict:
+    """Helper function to convert a tuple of data into a dict
+    row: tuple of user data
+
+    Returns:
+    A dict with db columns as the dict keys
+    """
+    column_names = [
+            "username", "name", "email", "points", "role"
+        ]
+    return dict(zip(column_names, list(row)))

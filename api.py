@@ -41,5 +41,14 @@ def tasks():
     all_tasks = {"tasks": tasks}
     return all_tasks #to return a json named tasks
 
+@app.route('/users/<username>')
+def user(username):
+    """A user endpoint for obtaining a single user information"""
+    print("Grabbing single user data")
+    conn = db.connect()
+    user = db.get_user(conn, str(username))
+    return json.dumps(user)
+
+
 if __name__ == '__main__':
     app.run()
